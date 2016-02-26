@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">萌萌兔</string>
+    <string name="map_prompt">Choose a map</string>
+    <string name="dif_prompt">Choose a difficulty</string>
+    <string name="mode_prompt">Choose a game mode</string>
+    <string name="start">start</string>
+    <string name="confim_exit">再按一次退出!</string>
+</resources>

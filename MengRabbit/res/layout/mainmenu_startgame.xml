@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/mBackground"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/background" />
+
+    <LinearLayout
+        android:id="@+id/mScreen"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+        
+        <LinearLayout
+            android:id="@+id/banner_container" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center" >
+            <Gallery
+                android:id="@+id/gallery1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:animationDuration="50"
+                android:spacing="7dp"
+                android:unselectedAlpha="0.3" />
+            
+            <Button
+                android:id="@+id/startmap"
+                android:layout_width="@dimen/dp_128"
+                android:layout_height="@dimen/dp_32"
+                android:background="@drawable/xml_button_startgame"
+                android:scaleType="fitXY" 
+                android:layout_marginTop="@dimen/dp_128"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
