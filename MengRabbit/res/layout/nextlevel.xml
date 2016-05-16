@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="260dp"
+    android:layout_height="400dp"
+    android:minHeight="400dp"
+    android:minWidth="260dp"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp" 
+        android:layout_marginLeft="20dp">
+
+        <TextView
+            android:id="@+id/NextLevelTitle"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:typeface="serif" />
+
+        <ImageView
+            android:id="@+id/NextLevelImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
+            android:src="@drawable/mrrabbit" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/NextLevelText"
+        android:layout_width="fill_parent"
+        android:layout_height="270dp"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:typeface="serif" 
+        />
+
+    <Button
+        android:id="@+id/NextLevelButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="@string/start"
+        android:textSize="18sp" />
+
+</LinearLayout>
