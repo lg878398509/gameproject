@@ -1,0 +1,426 @@
+
+miner.png
+size: 1019,126
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ban-tay-p
+  rotate: false
+  xy: 668, 46
+  size: 21, 24
+  orig: 21, 27
+  offset: 0, 0
+  index: -1
+ban-tay-p-1
+  rotate: true
+  xy: 579, 21
+  size: 13, 15
+  orig: 21, 27
+  offset: 4, 7
+  index: -1
+ban-tay-p-2
+  rotate: false
+  xy: 579, 36
+  size: 13, 17
+  orig: 21, 27
+  offset: 4, 4
+  index: -1
+ban-tay-p-3
+  rotate: true
+  xy: 354, 4
+  size: 16, 25
+  orig: 21, 27
+  offset: 5, 2
+  index: -1
+ban-tay-t-0
+  rotate: false
+  xy: 381, 4
+  size: 15, 16
+  orig: 21, 27
+  offset: 3, 6
+  index: -1
+ban-tay-t-1
+  rotate: false
+  xy: 594, 36
+  size: 13, 17
+  orig: 21, 27
+  offset: 4, 5
+  index: -1
+ban-tay-t-2
+  rotate: false
+  xy: 311, 2
+  size: 13, 18
+  orig: 21, 27
+  offset: 4, 4
+  index: -1
+ban-tay-t-3
+  rotate: true
+  xy: 543, 2
+  size: 21, 26
+  orig: 21, 27
+  offset: 0, 0
+  index: -1
+ban-tay-t-4
+  rotate: true
+  xy: 284, 2
+  size: 18, 25
+  orig: 21, 27
+  offset: 1, 0
+  index: -1
+ban-tay-t-5
+  rotate: true
+  xy: 326, 4
+  size: 16, 26
+  orig: 21, 27
+  offset: 4, 1
+  index: -1
+banh-xe-1
+  rotate: false
+  xy: 543, 25
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+banh-xe-2
+  rotate: false
+  xy: 640, 44
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+bong-do
+  rotate: false
+  xy: 142, 12
+  size: 140, 17
+  orig: 150, 17
+  offset: 5, 0
+  index: -1
+bong-do-0
+  rotate: false
+  xy: 404, 53
+  size: 140, 16
+  orig: 150, 17
+  offset: 5, 1
+  index: -1
+bong-do-1
+  rotate: false
+  xy: 546, 72
+  size: 140, 16
+  orig: 150, 17
+  offset: 5, 1
+  index: -1
+bong-do-2
+  rotate: false
+  xy: 551, 109
+  size: 140, 17
+  orig: 150, 17
+  offset: 5, 0
+  index: -1
+bong-do-3
+  rotate: false
+  xy: 692, 91
+  size: 140, 16
+  orig: 150, 17
+  offset: 5, 1
+  index: -1
+bong-happy
+  rotate: false
+  xy: 404, 71
+  size: 140, 17
+  orig: 150, 17
+  offset: 5, 0
+  index: -1
+bong-happy-1
+  rotate: false
+  xy: 550, 90
+  size: 140, 17
+  orig: 150, 17
+  offset: 5, 0
+  index: -1
+bong-suc-manh
+  rotate: false
+  xy: 2, 6
+  size: 138, 120
+  orig: 146, 120
+  offset: 2, 0
+  index: -1
+bong-suc-manh-0
+  rotate: false
+  xy: 285, 22
+  size: 117, 104
+  orig: 146, 120
+  offset: 12, 0
+  index: -1
+bong-tang-suc-manh
+  rotate: false
+  xy: 693, 109
+  size: 140, 17
+  orig: 150, 17
+  offset: 5, 0
+  index: -1
+bong-tang-suc-manh-2
+  rotate: false
+  xy: 404, 109
+  size: 145, 17
+  orig: 150, 17
+  offset: 5, 0
+  index: -1
+bong-tang-suc-manh-3
+  rotate: false
+  xy: 404, 90
+  size: 144, 17
+  orig: 150, 17
+  offset: 5, 0
+  index: -1
+chan
+  rotate: true
+  xy: 835, 65
+  size: 61, 63
+  orig: 61, 63
+  offset: 0, 0
+  index: -1
+dau-0
+  rotate: false
+  xy: 929, 60
+  size: 24, 17
+  orig: 43, 57
+  offset: 6, 23
+  index: -1
+dau-1(mat)
+  rotate: false
+  xy: 1003, 89
+  size: 16, 5
+  orig: 43, 57
+  offset: 10, 27
+  index: -1
+dau-2(dau)
+  rotate: true
+  xy: 454, 8
+  size: 43, 57
+  orig: 43, 57
+  offset: 0, 0
+  index: -1
+dieu-khien-p
+  rotate: false
+  xy: 571, 26
+  size: 6, 25
+  orig: 6, 25
+  offset: 0, 0
+  index: -1
+dieu-khien-t-0
+  rotate: false
+  xy: 398, 8
+  size: 3, 12
+  orig: 3, 12
+  offset: 0, 0
+  index: -1
+dieu-khien-t-1
+  rotate: true
+  xy: 571, 2
+  size: 22, 5
+  orig: 22, 5
+  offset: 0, 0
+  index: -1
+ghe
+  rotate: true
+  xy: 513, 17
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: -1
+may-p
+  rotate: false
+  xy: 596, 22
+  size: 7, 5
+  orig: 43, 57
+  offset: 8, 34
+  index: -1
+may-trai
+  rotate: true
+  xy: 153, 2
+  size: 8, 5
+  orig: 43, 57
+  offset: 20, 34
+  index: -1
+mieng-binh-thuong
+  rotate: false
+  xy: 2, 2
+  size: 8, 2
+  orig: 43, 57
+  offset: 14, 18
+  index: -1
+mieng-buon
+  rotate: false
+  xy: 467, 3
+  size: 12, 3
+  orig: 43, 57
+  offset: 13, 17
+  index: -1
+mieng-cuoi-1
+  rotate: false
+  xy: 609, 39
+  size: 16, 14
+  orig: 43, 57
+  offset: 11, 8
+  index: -1
+mieng-cuoi-mim
+  rotate: false
+  xy: 177, 7
+  size: 10, 3
+  orig: 43, 57
+  offset: 14, 18
+  index: -1
+mieng-ha-1
+  rotate: false
+  xy: 596, 29
+  size: 10, 5
+  orig: 43, 57
+  offset: 14, 16
+  index: -1
+mieng-ha-2
+  rotate: false
+  xy: 142, 2
+  size: 9, 8
+  orig: 43, 57
+  offset: 14, 13
+  index: -1
+mieng-nhan-0
+  rotate: false
+  xy: 627, 41
+  size: 10, 5
+  orig: 43, 57
+  offset: 14, 16
+  index: -1
+mieng-nhan-1
+  rotate: false
+  xy: 627, 48
+  size: 11, 5
+  orig: 43, 57
+  offset: 14, 16
+  index: -1
+mieng-nhan-2
+  rotate: false
+  xy: 454, 2
+  size: 11, 4
+  orig: 43, 57
+  offset: 14, 17
+  index: -1
+minh-0
+  rotate: true
+  xy: 404, 2
+  size: 49, 48
+  orig: 49, 48
+  offset: 0, 0
+  index: -1
+minh-1
+  rotate: false
+  xy: 900, 79
+  size: 53, 47
+  orig: 53, 47
+  offset: 0, 0
+  index: -1
+mo-hoi-1
+  rotate: false
+  xy: 17, 2
+  size: 2, 2
+  orig: 43, 57
+  offset: 26, 33
+  index: -1
+mo-hoi-2
+  rotate: false
+  xy: 21, 2
+  size: 2, 2
+  orig: 43, 57
+  offset: 7, 29
+  index: -1
+mo-hoi-3
+  rotate: false
+  xy: 12, 2
+  size: 3, 2
+  orig: 43, 57
+  offset: 7, 32
+  index: -1
+mo-hoi-sad
+  rotate: true
+  xy: 160, 5
+  size: 5, 15
+  orig: 5, 15
+  offset: 0, 0
+  index: -1
+non
+  rotate: false
+  xy: 955, 88
+  size: 46, 38
+  orig: 46, 38
+  offset: 0, 0
+  index: -1
+tay-p-0
+  rotate: false
+  xy: 955, 60
+  size: 13, 26
+  orig: 17, 31
+  offset: 2, 3
+  index: -1
+tay-p-1
+  rotate: true
+  xy: 900, 64
+  size: 13, 27
+  orig: 17, 31
+  offset: 2, 3
+  index: -1
+tay-p-2
+  rotate: true
+  xy: 513, 2
+  size: 13, 28
+  orig: 17, 31
+  offset: 2, 2
+  index: -1
+tay-t-1
+  rotate: false
+  xy: 970, 60
+  size: 13, 26
+  orig: 17, 31
+  offset: 2, 4
+  index: -1
+tay-t-2
+  rotate: false
+  xy: 985, 63
+  size: 14, 23
+  orig: 17, 31
+  offset: 2, 7
+  index: -1
+vai-p-0
+  rotate: false
+  xy: 1003, 96
+  size: 16, 30
+  orig: 17, 31
+  offset: 0, 1
+  index: -1
+vai-p-1
+  rotate: true
+  xy: 578, 55
+  size: 15, 31
+  orig: 17, 31
+  offset: 1, 0
+  index: -1
+vai-t-0
+  rotate: true
+  xy: 611, 55
+  size: 15, 27
+  orig: 17, 31
+  offset: 1, 2
+  index: -1
+vai-t-1
+  rotate: true
+  xy: 546, 53
+  size: 17, 30
+  orig: 17, 31
+  offset: 0, 1
+  index: -1
+xe
+  rotate: false
+  xy: 142, 31
+  size: 141, 95
+  orig: 141, 95
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,230 @@
+
+miner-classic.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Arm-L4
+  rotate: false
+  xy: 760, 233
+  size: 42, 34
+  orig: 42, 34
+  offset: 0, 0
+  index: -1
+Arm-L5
+  rotate: false
+  xy: 534, 152
+  size: 52, 39
+  orig: 52, 39
+  offset: 0, 0
+  index: -1
+Arm-L8
+  rotate: true
+  xy: 702, 236
+  size: 31, 56
+  orig: 31, 56
+  offset: 0, 0
+  index: -1
+Arm-L9
+  rotate: true
+  xy: 588, 156
+  size: 35, 52
+  orig: 35, 52
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 916, 260
+  size: 96, 104
+  orig: 96, 104
+  offset: 0, 0
+  index: -1
+Leg-0
+  rotate: false
+  xy: 534, 193
+  size: 102, 74
+  orig: 102, 74
+  offset: 0, 0
+  index: -1
+Leg-1
+  rotate: true
+  xy: 937, 366
+  size: 129, 75
+  orig: 129, 75
+  offset: 0, 0
+  index: -1
+dynamite
+  rotate: false
+  xy: 638, 222
+  size: 62, 45
+  orig: 62, 45
+  offset: 0, 0
+  index: -1
+eyebrows-0
+  rotate: false
+  xy: 306, 265
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+eyebrows-1
+  rotate: true
+  xy: 441, 383
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+eyebrows-2
+  rotate: true
+  xy: 565, 383
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+eyebrows-3
+  rotate: true
+  xy: 689, 383
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+hand-L1
+  rotate: false
+  xy: 846, 235
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+hand-L2
+  rotate: true
+  xy: 638, 193
+  size: 27, 34
+  orig: 27, 34
+  offset: 0, 0
+  index: -1
+handles-0
+  rotate: false
+  xy: 2, 2
+  size: 40, 13
+  orig: 40, 13
+  offset: 0, 0
+  index: -1
+handles-1
+  rotate: false
+  xy: 804, 230
+  size: 40, 37
+  orig: 40, 37
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 813, 383
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+mh-0
+  rotate: false
+  xy: 2, 373
+  size: 150, 122
+  orig: 150, 122
+  offset: 0, 0
+  index: -1
+mh-1
+  rotate: false
+  xy: 2, 249
+  size: 150, 122
+  orig: 150, 122
+  offset: 0, 0
+  index: -1
+mh-2
+  rotate: false
+  xy: 154, 373
+  size: 150, 122
+  orig: 150, 122
+  offset: 0, 0
+  index: -1
+mh-3
+  rotate: false
+  xy: 2, 125
+  size: 150, 122
+  orig: 150, 122
+  offset: 0, 0
+  index: -1
+mh-4
+  rotate: false
+  xy: 154, 249
+  size: 150, 122
+  orig: 150, 122
+  offset: 0, 0
+  index: -1
+mmouth-3
+  rotate: true
+  xy: 420, 269
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+mouth-0
+  rotate: true
+  xy: 544, 269
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+mouth-1
+  rotate: true
+  xy: 668, 269
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+mouth-2
+  rotate: true
+  xy: 792, 269
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+mouth-4
+  rotate: true
+  xy: 154, 27
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+mouth-5
+  rotate: false
+  xy: 306, 141
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+mouth-6
+  rotate: false
+  xy: 420, 145
+  size: 112, 122
+  orig: 112, 122
+  offset: 0, 0
+  index: -1
+pulleys
+  rotate: false
+  xy: 306, 389
+  size: 133, 106
+  orig: 133, 106
+  offset: 0, 0
+  index: -1
+pulleys-0
+  rotate: false
+  xy: 2, 17
+  size: 133, 106
+  orig: 133, 106
+  offset: 0, 0
+  index: -1
+pulleys-1
+  rotate: false
+  xy: 154, 141
+  size: 133, 106
+  orig: 133, 106
+  offset: 0, 0
+  index: -1
