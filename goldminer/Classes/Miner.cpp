@@ -47,6 +47,11 @@ void Miner::runAppear() {
 	miner->addAnimation(0, "miner-wait", false, 2);
 }
 
+void Miner::runDisAppear() {
+	miner->addAnimation(0, "miner-disappear", true, 0);
+	miner->addAnimation(0, "miner-wait", false, 2);
+}
+
 void Miner::runShakeClaw() {
 	//先定位旋转角度为 0
 	rope->setRotation(0);
@@ -73,7 +78,7 @@ bool Miner::getRopeChanging() {
 void Miner::runRopeThrow() {
 	isRopeSwaying = false;
 	unschedule(CC_SCHEDULE_SELECTOR(Miner::reduceRopeHeight));
-	schedule(CC_SCHEDULE_SELECTOR(Miner::addRopeHeight),0.025);
+	schedule(CC_SCHEDULE_SELECTOR(Miner::addRopeHeight),0.05);
 	miner->addAnimation(0, "miner-throw", false, 0);
 }
 
@@ -86,7 +91,7 @@ void Miner::addRopeHeight(float df) {
 //缩绳子操作
 void Miner::runRopePull() {
 	unschedule(CC_SCHEDULE_SELECTOR(Miner::addRopeHeight));
-	schedule(CC_SCHEDULE_SELECTOR(Miner::reduceRopeHeight), 0.025);
+	schedule(CC_SCHEDULE_SELECTOR(Miner::reduceRopeHeight), 0.05);
 
 	if (_gold && (_gold->getWeight() >= 6)) {
 		miner->addAnimation(0, "miner-pull-heavy", true, 0);
@@ -180,4 +185,13 @@ void Miner::addGold(std::string type) {
 
 Point Miner::getClawAxisPoint() {
 	return clawAxis->getPosition();
+}
+
+//扔掉金块
+void Miner::dropGold() {
+	if (_gold) {
+		_gold->removeFromParent();
+		_gold = NULL;
+		runClawOpen();
+	}
 }

@@ -22,6 +22,8 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameMain);
+	//析构函数
+	~GameMain();
 private:
 	void startTrips(ActionTimeline* timeDown);
 	/*
@@ -29,12 +31,17 @@ private:
 		end_x: x轴结束位置
 		end_y: y轴结束位置
 	*/
-	auto createMove(float end_x, float end_y);
+	MoveTo* createMove(float end_x, float end_y);
 
 	//将金块,石头设置成刚体
 	void setGoldStoneToBody(Vector<Node *> goldVector);
 	//退出当前关卡
 	void exitLevel();
+
+	//倒计时方法
+	void timeDownCount(float df);
+	//游戏结束的处理
+	void gameResult();
 
 private:
 	int goalCoin;//目标分数
@@ -44,7 +51,12 @@ private:
 	//控制矿工第一次进入时和墙壁的碰撞检测
 	int control = -1;
 	Text *textcurCoin;
-	int curGold;
+	int curGold;//当前分数
+	ActionTimeline* levelDown;
+	//剩余时间
+	int leftTime;
+
+	Text *timeDownText;
 
 };
 

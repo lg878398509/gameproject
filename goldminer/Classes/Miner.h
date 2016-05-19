@@ -29,6 +29,8 @@ public:
     virtual bool init();
 	//出现动画
 	void runAppear();
+	//出现动画
+	void runDisAppear();
 	//左右摆动
 	void runShakeClaw();
 
@@ -53,6 +55,9 @@ public:
 	void addGold(std::string type);
 	//得到钩子轴承位置
 	Point getClawAxisPoint();
+
+	//扔掉金块
+	void dropGold();
 private:
 	//增加绳子的长度
 	void addRopeHeight(float df);

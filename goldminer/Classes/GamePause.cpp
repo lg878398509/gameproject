@@ -50,7 +50,7 @@ bool GamePause::init()
 		btnEffect->loadTextureNormal("sound-on-btn-0.png", TextureResType::PLIST);
 	}
 	else {
-		btnEffect->loadTextureNormal("sound-off-off-0.png", TextureResType::PLIST);
+		btnEffect->loadTextureNormal("sound-off-btn-0.png", TextureResType::PLIST);
 	}
 
 	//±≥æ∞“Ù¿÷…Ë÷√
@@ -66,8 +66,8 @@ bool GamePause::init()
 	//ÕÀ≥ˆ”Œœ∑
 	auto btnExit = static_cast<Button *>(Helper::seekWidgetByName(static_cast<Button *>(gamePause), "btnExit"));
 	btnExit->addTouchEventListener(CC_CALLBACK_2(GamePause::btnExit, this));
-
-
+	btnNextLevel = static_cast<Button *>(Helper::seekWidgetByName(static_cast<Button *>(gamePause), "btnNextLevel"));
+	
     return true;
 }
 
@@ -139,6 +139,9 @@ void GamePause::btnExit(Ref *pSender, Widget::TouchEventType type) {
 		gamePause->runAction(seq);
 		
 	}
-	
-	
+}
+
+void GamePause::setNextDisabled() {
+	btnNextLevel->setEnabled(false);
+	btnNextLevel->loadTextureNormal("btn-2.png", TextureResType::PLIST);
 }

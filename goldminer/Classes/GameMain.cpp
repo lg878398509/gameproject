@@ -4,7 +4,7 @@
 
 #define WORLDTAG 100
 
-auto GameMain::createMove(float end_x, float end_y) {
+MoveTo* GameMain::createMove(float end_x, float end_y) {
 	return MoveTo::create(1, Vec2(end_x, end_y));
 }
 
@@ -48,8 +48,12 @@ bool GameMain::init() {
 
 	size = Director::getInstance()->getVisibleSize();
 
-	auto level_1 = CSLoader::createNode("level_1.csb");
+	leftTime = 60;
 
+
+	//auto level_1 = CSLoader::createNode("level_1.csb");
+	Data data = FileUtils::getInstance()->getDataFromFile("Level_1.csb");
+	Node* level_1 = CSLoader::createNode(data);
 	//设置动画
 	Vector<Node*> vectorGold = Helper::seekWidgetByName(static_cast<Layout *>(level_1), "panelGold")->getChildren();
 	
@@ -62,7 +66,7 @@ bool GameMain::init() {
 
 	//显示当前关卡
 	auto leveltop = CSLoader::createNode("leveltop.csb");
-	ActionTimeline* levelDown = CSLoader::createTimeline("leveltop.csb");
+	levelDown = CSLoader::createTimeline("leveltop.csb");
 	leveltop->runAction(levelDown);
 	levelDown->gotoFrameAndPause(0);
 
@@ -76,6 +80,10 @@ bool GameMain::init() {
 	//显示当前金币数
 	textcurCoin = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Layout *> (leveltop), "curCoin"));
 	textcurCoin->setText(String::createWithFormat("%d", curGold)->getCString());
+
+	//倒计时牌
+	timeDownText = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Layout *> (leveltop), "timeDown"));
+	timeDownText->setText(StringUtils::toString(leftTime));
 
 	addChild(level_1);
 
@@ -125,6 +133,7 @@ bool GameMain::init() {
 		lbsAddGold->setFontSize(20);
 		lbsAddGold->setColor(Color3B(250, 250, 0));
 		addChild(lbsAddGold);
+
 		lbsAddGold->setPosition(miner->rope->convertToWorldSpace(Vec2(miner->getClawAxisPoint().x, miner->getClawAxisPoint().y)));
 		auto actionSpawn = Spawn::create(MoveTo::create(0.5, textcurCoin->getPosition()), 
 			Sequence::create(ScaleTo::create(0.25, 0.1), nullptr), nullptr);
@@ -143,6 +152,9 @@ bool GameMain::init() {
 		if (type == Widget::TouchEventType::ENDED) {
 			onExit();
 			auto gamePause = GamePause::create();
+			if (curGold < goalCoin) {
+				gamePause->setNextDisabled();
+			}
 			//this->addChild(gamePause);
 			Director::getInstance()->getRunningScene()->addChild(gamePause);
 			
@@ -215,6 +227,9 @@ void GameMain::startTrips(ActionTimeline* timeD) {
 
 			};
 			_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+			//倒计时开始
+			schedule(CC_SCHEDULE_SELECTOR(GameMain::timeDownCount), 1, 59, 0);
 			
 		}), nullptr));
 
@@ -252,19 +267,101 @@ void GameMain::setGoldStoneToBody(Vector<Node *> goldVector) {
 
 
 void GameMain::exitLevel() {
-	auto exitLeveltips = CSLoader::createNode("gameresult.csb");
-	addChild(exitLeveltips);
 	
-	auto gameExit = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Widget *>(exitLeveltips), "gameExit"));
-	auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, size/2)),
-		DelayTime::create(1),
-		EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, size.height/2))),
+	//丢弃金币
+	miner->dropGold();
+
+	levelDown->gotoFrameAndPlay(0, -30, false);
+	
+	//矿工离场时轮子动画
+	miner->runDisAppear();
+
+	auto disAppearSeq = Sequence::create(MoveTo::create(0.5, Vec2(size.width + 100, size.height - 210)),
 		CallFuncN::create([=](Ref *ref) {
-			Director::getInstance()->replaceScene(GameMenu::createScene());
-		}),
-		nullptr);
-	gameExit->runAction(seq);
+			auto exitLeveltips = CSLoader::createNode("gameresult.csb");
+			addChild(exitLeveltips);
+			auto gameExit = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Widget *>(exitLeveltips), "gameExit"));
+
+			//提示语句
+			auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, size / 2)),
+				DelayTime::create(1),
+				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, size.height / 2))),
+				CallFuncN::create([=](Ref *ref) {
+				Director::getInstance()->replaceScene(GameMenu::createScene());
+			}),
+				nullptr);
+			gameExit->runAction(seq);
+	}), nullptr);
+	miner->runAction(disAppearSeq);
 }
 
+void GameMain::timeDownCount(float df) {
+	leftTime--;
+	timeDownText->setText(StringUtils::toString(leftTime));
+	if (leftTime <= 0) {
+		gameResult();
+	}
+}
 
+void GameMain::gameResult() {
+	levelDown->gotoFrameAndPlay(30, 0, false);
 
+	//矿工离场时轮子动画
+	miner->runDisAppear();
+
+	auto disAppearSeq = Sequence::create(MoveTo::create(0.5, Vec2(size.width + 100, size.height - 210)),
+		CallFuncN::create([=](Ref *ref) {
+		auto exitLeveltips = CSLoader::createNode("gameresult.csb");
+		addChild(exitLeveltips);
+		auto gameFail = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Widget *>(exitLeveltips), "gameFail"));
+		auto userDef = UserDefault::getInstance();
+		if (curGold < goalCoin) {
+			//提示语句
+			auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width/2, gameFail->getPosition().y))),
+				DelayTime::create(1),
+				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, gameFail->getPosition().y))),
+				CallFuncN::create([=](Ref *ref) {
+				userDef->setIntegerForKey(CUR_LEVEL, 1);
+				userDef->setIntegerForKey(CUR_GOLD, 0);
+				Director::getInstance()->replaceScene(GameMenu::createScene());
+			}),
+				nullptr);
+			gameFail->runAction(seq);
+		}
+		else {
+			auto gameSuccess = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Widget *>(exitLeveltips), "gameSuccess"));
+			auto nodeCoin = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Widget *>(exitLeveltips), "nodeCoin"));
+			auto gainCoinText = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Widget *>(exitLeveltips), "gainCoin"));
+			int gainCoinNum = curGold - userDef->getIntegerForKey(CUR_GOLD);
+			userDef->setIntegerForKey(CUR_LEVEL, userDef->getIntegerForKey(CUR_LEVEL)+1);
+			userDef->setIntegerForKey(CUR_GOLD, curGold);
+			gainCoinText->setString(String::createWithFormat("%d", gainCoinNum)->getCString());
+
+			
+			//提示语句
+			auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width/2, gameSuccess->getPosition().y))),
+				DelayTime::create(1),
+				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, gameSuccess->getPosition().y))),
+				CallFuncN::create([=](Ref *ref) {
+					//跳转到下一关
+					Director::getInstance()->replaceScene(GameMain::createScene());
+				}),
+				nullptr);
+			gameSuccess->runAction(seq);
+
+			//提示语句
+			auto nodeCoinSeq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width / 2, nodeCoin->getPosition().y))),
+				DelayTime::create(1),
+				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, nodeCoin->getPosition().y))), nullptr);
+			nodeCoin->runAction(nodeCoinSeq);
+		}
+		
+	}), nullptr);
+	miner->runAction(disAppearSeq);
+}
+
+GameMain::~GameMain() {
+	_eventDispatcher->removeCustomEventListeners("pullcomplete");
+	_eventDispatcher->removeCustomEventListeners("gamePause"); 
+	_eventDispatcher->removeCustomEventListeners("exitLevel");  
+}

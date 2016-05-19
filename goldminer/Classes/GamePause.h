@@ -17,6 +17,8 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(GamePause);
+	//禁用“下一关”按钮
+	void setNextDisabled();
 private:
 	//关闭设置窗口回调
 	void closeWindow(Ref *pSender, Widget::TouchEventType type);
@@ -30,13 +32,15 @@ private:
 	void about(Ref *pSender, Widget::TouchEventType type);
 	//退出关卡
 	void btnExit(Ref *pSender, Widget::TouchEventType type);
-
+	//移除自己
 	void removeSeft(Ref *pSender);
+	
 private:
 	Size visiableSize;
 	Node *gamePause;
 	Button *btnEffect;
 	Button *btnBgMusic;
+	Button *btnNextLevel;//下一关
 
 };
 
