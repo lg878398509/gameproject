@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "cocostudio\CocoStudio.h"
+#include "Newbie.h"
 
 #include "ui/CocosGUI.h"
 using namespace cocos2d::ui; 

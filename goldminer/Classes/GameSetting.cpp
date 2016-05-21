@@ -50,7 +50,7 @@ bool GameSetting::init()
 		btnEffect->loadTextureNormal("sound-on-btn-0.png", TextureResType::PLIST);
 	}
 	else {
-		btnEffect->loadTextureNormal("sound-off-off-0.png", TextureResType::PLIST);
+		btnEffect->loadTextureNormal("sound-off-btn-0.png", TextureResType::PLIST);
 	}
 
 	//背景音乐设置
@@ -86,7 +86,9 @@ void GameSetting::closeWindow(Ref *pSender, Widget::TouchEventType type) {
 }
 
 void GameSetting::removeSeft(Ref *pSender) {
+	_eventDispatcher->dispatchCustomEvent("setting_over");
 	removeFromParentAndCleanup(true);
+	
 }
 
 //碰撞声音设置
@@ -122,6 +124,16 @@ void GameSetting::closeBgMusic(Ref *pSender, Widget::TouchEventType type) {
 }
 //新手教程
 void GameSetting::newbie(Ref *pSender, Widget::TouchEventType type) {
+	if (type == Widget::TouchEventType::ENDED) {
+		//关闭设置框
+		auto moveBack = MoveTo::create(0.5, Vec2(2 * visiableSize.width, visiableSize.height / 2));
+		auto seq = Sequence::create(moveBack, CallFuncN::create([=](Ref *pSender) {
+			_eventDispatcher->dispatchCustomEvent("newbie");
+			removeFromParentAndCleanup(true);
+		}), nullptr);
+		menuSetting->runAction(seq);
+	}
+
 
 }
 //关于我们

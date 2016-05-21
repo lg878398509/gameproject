@@ -78,6 +78,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	if (!UserDefault::getInstance()->getBoolForKey(IS_FIRST_PLAY)) {
 		UserDefault::getInstance()->setBoolForKey(IS_PLAY_EFFECT, true);
 		UserDefault::getInstance()->setBoolForKey(IS_PLAY_BG_MUSIC, true);
+		UserDefault::getInstance()->setBoolForKey(IS_FIRST_PLAY, true);
 		UserDefault::getInstance()->setIntegerForKey(CUR_LEVEL, 1);
 		UserDefault::getInstance()->setIntegerForKey(CUR_GOLD, 0);
 	}

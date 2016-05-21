@@ -23,6 +23,8 @@ private:
 	float ropeHeight;
 	Gold *_gold;
 
+	int pullClawSound;
+
 public:
     static cocos2d::Scene* createScene();
 

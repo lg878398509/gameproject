@@ -42,7 +42,7 @@ bool GameMain::init() {
 		return false;
 	}
 
-	if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_BG_MUSIC) && !SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying()) {
+	if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_BG_MUSIC)) {
 		SimpleAudioEngine::getInstance()->playBackgroundMusic(LEVEL_BG_MUSIC, true);
 	}
 
@@ -104,6 +104,19 @@ bool GameMain::init() {
 		if (-1 != control) {
 			//判断碰撞的是世界边界还是金块
 			auto shapeB = contact.getShapeB()->getBody()->getNode();
+			//钩子碰撞到金币的声音
+			if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT)) {
+				if (shapeB->getName() == "smallGold" || shapeB->getName() == "moddleGold") {
+					SimpleAudioEngine::getInstance()->playEffect(CONTACT_GOLD_NORMAL_MUSIC);
+				}
+				else if (shapeB->getName() == "bigGold") {
+					SimpleAudioEngine::getInstance()->playEffect(CONTACT_GOLD_BIG_MUSIC);
+				}
+				else if (shapeB->getName() == "bigstone" || shapeB->getName() == "smallstone") {
+					SimpleAudioEngine::getInstance()->playEffect(CONTACT_STONE_MUSIC);
+				}
+			}
+
 			if (WORLDTAG != shapeB->getTag()) {
 				//合拢钩子
 				miner->runClawClose();
@@ -114,6 +127,7 @@ bool GameMain::init() {
 			}
 			//拉绳子操作
 			miner->runRopePull();
+			
 		}
 		control++;
 		return true;
@@ -121,9 +135,8 @@ bool GameMain::init() {
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(physicsListener, this);
 
 
-	//添加拉绳子结束的回掉
-	_eventDispatcher->addCustomEventListener("pullcomplete", [=](EventCustom *evn) {
-		String *strValue = (String*) (evn->getUserData());
+	pullcompleteListener = EventListenerCustom::create("pullcomplete", [=](EventCustom* event) {
+		String *strValue = (String*)(event->getUserData());
 		int addGold = strValue->intValue();
 		curGold += addGold;
 		//textcurCoin->setString(String::createWithFormat("%d", curGold)->getCString());
@@ -134,8 +147,14 @@ bool GameMain::init() {
 		lbsAddGold->setColor(Color3B(250, 250, 0));
 		addChild(lbsAddGold);
 
+		//加入金币的声音
+		if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT)) {
+			SimpleAudioEngine::getInstance()->playEffect(ADD_SCORE_MUSIC, false);
+		}
+		
+
 		lbsAddGold->setPosition(miner->rope->convertToWorldSpace(Vec2(miner->getClawAxisPoint().x, miner->getClawAxisPoint().y)));
-		auto actionSpawn = Spawn::create(MoveTo::create(0.5, textcurCoin->getPosition()), 
+		auto actionSpawn = Spawn::create(MoveTo::create(0.5, textcurCoin->getPosition()),
 			Sequence::create(ScaleTo::create(0.25, 0.1), nullptr), nullptr);
 		auto seq = Sequence::create(actionSpawn, CallFuncN::create([=](Node* node) {
 			lbsAddGold->removeFromParent();
@@ -144,6 +163,31 @@ bool GameMain::init() {
 		lbsAddGold->runAction(seq);
 	});
 
+	_eventDispatcher->addEventListenerWithFixedPriority(pullcompleteListener, 1);
+
+
+	////添加拉绳子结束的回掉
+	//_eventDispatcher->addCustomEventListener("pullcomplete", [=](EventCustom *evn) {
+	//	String *strValue = (String*)(evn->getUserData());
+	//	int addGold = strValue->intValue();
+	//	curGold += addGold;
+	//	//textcurCoin->setString(String::createWithFormat("%d", curGold)->getCString());
+
+	//	auto lbsAddGold = LabelTTF::create();
+	//	lbsAddGold->setString(String::createWithFormat("%d", curGold)->getCString());
+	//	lbsAddGold->setFontSize(20);
+	//	lbsAddGold->setColor(Color3B(250, 250, 0));
+	//	addChild(lbsAddGold);
+
+	//	lbsAddGold->setPosition(miner->rope->convertToWorldSpace(Vec2(miner->getClawAxisPoint().x, miner->getClawAxisPoint().y)));
+	//	auto actionSpawn = Spawn::create(MoveTo::create(0.5, textcurCoin->getPosition()),
+	//		Sequence::create(ScaleTo::create(0.25, 0.1), nullptr), nullptr);
+	//	auto seq = Sequence::create(actionSpawn, CallFuncN::create([=](Node* node) {
+	//		lbsAddGold->removeFromParent();
+	//		textcurCoin->setString(String::createWithFormat("%d", curGold)->getCString());
+	//	}), nullptr);
+	//	lbsAddGold->runAction(seq);
+	//});
 
 
 	//添加游戏暂停监听
@@ -221,6 +265,10 @@ void GameMain::startTrips(ActionTimeline* timeD) {
 				if (miner->getRopeChanging()) {
 					miner->stopShakeAction();
 					miner->runRopeThrow();
+					//伸绳子声音
+					if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT)) {
+						SimpleAudioEngine::getInstance()->playEffect(PUSH_CLAW_MUSIC);
+					}
 				}
 
 				return true;
@@ -245,15 +293,20 @@ void GameMain::setGoldStoneToBody(Vector<Node *> goldVector) {
 		Size goldSize = gold->getContentSize();
 		if ("smallGold" == gold->getName()) {//小金块
 			goldSize = 0.3 * goldSize;
+		
 		}
 		else if ("moddleGold" == gold->getName()) {//中金块
 			goldSize = 0.6 * goldSize;
+			
 		}
 		else if ("bigGold" == gold->getName()) {//大金块
-
+			
 		}
 		else if ("smallstone" == gold->getName()) {//石头
-
+			
+		}
+		else if ("bigstone" == gold->getName()) {//石头
+		
 		}
 
 		
@@ -361,7 +414,9 @@ void GameMain::gameResult() {
 }
 
 GameMain::~GameMain() {
-	_eventDispatcher->removeCustomEventListeners("pullcomplete");
+	SimpleAudioEngine::getInstance()->stopAllEffects();
+	_eventDispatcher->removeEventListener(pullcompleteListener);
+	/*_eventDispatcher->removeCustomEventListeners("pullcomplete");*/
 	_eventDispatcher->removeCustomEventListeners("gamePause"); 
 	_eventDispatcher->removeCustomEventListeners("exitLevel");  
 }

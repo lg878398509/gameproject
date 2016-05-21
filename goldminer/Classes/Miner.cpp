@@ -1,4 +1,7 @@
 #include "Miner.h"
+#include "SimpleAudioEngine.h"
+#include "GlobalDefine.h"
+using namespace CocosDenshion;
 
 Scene* Miner::createScene() {
 	// 'scene' is an autorelease object
@@ -90,6 +93,11 @@ void Miner::addRopeHeight(float df) {
 
 //ËõÉþ×Ó²Ù×÷
 void Miner::runRopePull() {
+	//À­Éþ×ÓÉùÒô
+	if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT)) {
+		pullClawSound = SimpleAudioEngine::getInstance()->playEffect(PULL_CLAW_MUSIC, true);
+	}
+
 	unschedule(CC_SCHEDULE_SELECTOR(Miner::addRopeHeight));
 	schedule(CC_SCHEDULE_SELECTOR(Miner::reduceRopeHeight), 0.05);
 
@@ -122,16 +130,22 @@ void Miner::reduceRopeHeight(float df) {
 
 		//ÒÆ³ý½ð¿é
 		if (_gold) {
+			if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT)) {
+				SimpleAudioEngine::getInstance()->playEffect(GET_GOLD_MUSIC, false);
+			}
 			_eventDispatcher->dispatchCustomEvent("pullcomplete", String::createWithFormat("%d", _gold->getValue()));
-
+			
 			//»Ö¸´¹³×ÓÔ­À´µÄ×´Ì¬
 			runClawOpen();
 			_gold->removeFromParent();
+			
 			_gold = NULL;
 		}
 
 		miner->addAnimation(0, "miner-wait", false, 0);
 		isRopeSwaying = true;
+		SimpleAudioEngine::getInstance()->stopEffect(pullClawSound);
+		
 		
 	}
 	rope->setSize(Size(rope->getSize().width, ropeHeight));

@@ -59,6 +59,15 @@ bool GameMenu::init()
 			Director::getInstance()->replaceScene(GameMain::createScene());
 		}
 	});
+
+	_eventDispatcher->addCustomEventListener("newbie", [=](Ref *pSender) {
+		onEnter();
+		this->addChild(Newbie::create());
+	});
+
+	_eventDispatcher->addCustomEventListener("setting_over", [=](Ref *pSender) {
+		onEnter();
+	});
 	return true;
 }
 
@@ -81,7 +90,13 @@ void GameMenu::showSetting(Ref *pSender, Widget::TouchEventType type) {
 
 void GameMenu::showOption(Ref *pSender, Widget::TouchEventType type) {
 	if (type == Widget::TouchEventType::ENDED) {
+		onExit();
 		auto gameSetting = GameSetting::create();
-		this->addChild(gameSetting);
+		//this->addChild(gameSetting);
+		Director::getInstance()->getRunningScene()->addChild(gameSetting);
 	}
+}
+
+GameMenu::~GameMenu() {
+	_eventDispatcher->removeCustomEventListeners("newbie");
 }

@@ -12,12 +12,15 @@ using namespace cocos2d::ui;
 class GameMenu : public cocos2d::Layer
 {
 public:
+	~GameMenu();
+
     static cocos2d::Scene* createScene();
 
     virtual bool init();
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameMenu);
+
 	//点击回掉显示动画
 	void showSetting(Ref *pSender, Widget::TouchEventType type);
 

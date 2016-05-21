@@ -58,6 +58,9 @@ private:
 
 	Text *timeDownText;
 
+	//抓取到金块并且绳子缩回后自定义事件监听
+	EventListenerCustom *pullcompleteListener;
+
 };
 
 #endif // __GAMEMAIN_H__
