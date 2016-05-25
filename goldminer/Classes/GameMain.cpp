@@ -46,23 +46,20 @@ bool GameMain::init() {
 		SimpleAudioEngine::getInstance()->playBackgroundMusic(LEVEL_BG_MUSIC, true);
 	}
 
+	curLevel = UserDefault::getInstance()->getIntegerForKey(CUR_LEVEL);
+	curGold = UserDefault::getInstance()->getIntegerForKey(CUR_GOLD);
+	goalCoin = GOAL_COIN(curLevel);
+
+
 	size = Director::getInstance()->getVisibleSize();
 
-	leftTime = 60;
-
-
 	//auto level_1 = CSLoader::createNode("level_1.csb");
-	Data data = FileUtils::getInstance()->getDataFromFile("Level_1.csb");
+	Data data = FileUtils::getInstance()->getDataFromFile(String::createWithFormat("Level_%d.csb", (curLevel % 7))->getCString());
 	Node* level_1 = CSLoader::createNode(data);
 	//设置动画
 	Vector<Node*> vectorGold = Helper::seekWidgetByName(static_cast<Layout *>(level_1), "panelGold")->getChildren();
 	
 	setGoldStoneToBody(vectorGold);
-
-	curLevel = UserDefault::getInstance()->getIntegerForKey(CUR_LEVEL);
-	curGold = UserDefault::getInstance()->getIntegerForKey(CUR_GOLD);
-
-	goalCoin = GOAL_COIN(curLevel);
 
 	//显示当前关卡
 	auto leveltop = CSLoader::createNode("leveltop.csb");
@@ -83,7 +80,7 @@ bool GameMain::init() {
 
 	//倒计时牌
 	timeDownText = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Layout *> (leveltop), "timeDown"));
-	timeDownText->setText(StringUtils::toString(leftTime));
+	timeDownText->setText(StringUtils::toString(GAME_LEFT_TIME(curLevel)));
 
 	addChild(level_1);
 
@@ -105,7 +102,7 @@ bool GameMain::init() {
 			//判断碰撞的是世界边界还是金块
 			auto shapeB = contact.getShapeB()->getBody()->getNode();
 			//钩子碰撞到金币的声音
-			if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT)) {
+			if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT) && !miner->isAddGold()) {
 				if (shapeB->getName() == "smallGold" || shapeB->getName() == "moddleGold") {
 					SimpleAudioEngine::getInstance()->playEffect(CONTACT_GOLD_NORMAL_MUSIC);
 				}
@@ -117,7 +114,7 @@ bool GameMain::init() {
 				}
 			}
 
-			if (WORLDTAG != shapeB->getTag()) {
+			if (WORLDTAG != shapeB->getTag() && !miner->isAddGold()) {
 				//合拢钩子
 				miner->runClawClose();
 				miner->addGold(shapeB->getName());
@@ -277,7 +274,7 @@ void GameMain::startTrips(ActionTimeline* timeD) {
 			_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 			//倒计时开始
-			schedule(CC_SCHEDULE_SELECTOR(GameMain::timeDownCount), 1, 59, 0);
+			schedule(CC_SCHEDULE_SELECTOR(GameMain::timeDownCount), 1, GAME_LEFT_TIME(curLevel) - 1, 0);
 			
 		}), nullptr));
 
@@ -320,11 +317,13 @@ void GameMain::setGoldStoneToBody(Vector<Node *> goldVector) {
 
 
 void GameMain::exitLevel() {
+
+	control = -1;
 	
 	//丢弃金币
 	miner->dropGold();
 
-	levelDown->gotoFrameAndPlay(0, -30, false);
+	levelDown->gotoFrameAndPlay(30, 0, false);
 	
 	//矿工离场时轮子动画
 	miner->runDisAppear();
@@ -349,14 +348,21 @@ void GameMain::exitLevel() {
 }
 
 void GameMain::timeDownCount(float df) {
-	leftTime--;
-	timeDownText->setText(StringUtils::toString(leftTime));
-	if (leftTime <= 0) {
+	GAME_LEFT_TIME(curLevel)--;
+	timeDownText->setText(StringUtils::toString(GAME_LEFT_TIME(curLevel)));
+	if (GAME_LEFT_TIME(curLevel) <= 0) {
 		gameResult();
+		return;
 	}
 }
 
 void GameMain::gameResult() {
+
+	control = -1;
+
+	//丢弃金币
+	miner->dropGold();
+
 	levelDown->gotoFrameAndPlay(30, 0, false);
 
 	//矿工离场时轮子动画
@@ -418,5 +424,6 @@ GameMain::~GameMain() {
 	_eventDispatcher->removeEventListener(pullcompleteListener);
 	/*_eventDispatcher->removeCustomEventListeners("pullcomplete");*/
 	_eventDispatcher->removeCustomEventListeners("gamePause"); 
-	_eventDispatcher->removeCustomEventListeners("exitLevel");  
+	_eventDispatcher->removeCustomEventListeners("exitLevel");
+	control = -1;
 }

@@ -35,4 +35,6 @@
 
 #define GOAL_COIN(x) 650 +  135 * (x - 1)*(x - 1) + 410*(x -1)
 
+#define GAME_LEFT_TIME(x) 30 + x
+
 #endif // __GLOBALDEFINE_H__

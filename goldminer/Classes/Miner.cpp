@@ -203,9 +203,21 @@ Point Miner::getClawAxisPoint() {
 
 //ÈÓµô½ð¿é
 void Miner::dropGold() {
+
+	SimpleAudioEngine::getInstance()->stopAllEffects();
+
+	unschedule(CC_SCHEDULE_SELECTOR(Miner::addRopeHeight));
+	unschedule(CC_SCHEDULE_SELECTOR(Miner::reduceRopeHeight));
+	
 	if (_gold) {
 		_gold->removeFromParent();
 		_gold = NULL;
-		runClawOpen();
 	}
+
+	//Éþ×ÓËõ¶Ì
+	rope->setSize(Size(rope->getSize().width, 20));
+}
+
+bool Miner::isAddGold() {
+	return NULL != _gold ? true : false;
 }

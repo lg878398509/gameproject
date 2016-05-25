@@ -60,6 +60,8 @@ public:
 
 	//扔掉金块
 	void dropGold();
+
+	bool isAddGold();
 private:
 	//增加绳子的长度
 	void addRopeHeight(float df);

@@ -53,10 +53,9 @@ private:
 	Text *textcurCoin;
 	int curGold;//当前分数
 	ActionTimeline* levelDown;
-	//剩余时间
-	int leftTime;
 
 	Text *timeDownText;
+	Node *leveltop;
 
 	//抓取到金块并且绳子缩回后自定义事件监听
 	EventListenerCustom *pullcompleteListener;
