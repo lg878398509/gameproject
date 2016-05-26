@@ -17,14 +17,14 @@ Scene* GameMain::createScene() {
 	world->setGravity(Vec2::ZERO);
 
 	Size size = Director::getInstance()->getVisibleSize();
+	Vec2 originSize = Director::getInstance()->getVisibleOrigin();
 	PhysicsBody *body = PhysicsBody::createEdgeBox(size);
 	body->setCategoryBitmask(10);
 	body->setCategoryBitmask(10);
 	body->setContactTestBitmask(10);
 
 	Node *node = Node::create();
-	node->setContentSize(size);
-	node->setPosition(size/2);
+	node->setPosition(size.width / 2 + originSize.x, size.height / 2 + originSize.y);
 	node->setPhysicsBody(body);
 	node->setTag(WORLDTAG);
 	scene->addChild(node);
@@ -89,7 +89,7 @@ bool GameMain::init() {
 
 	//添加矿工
 	miner = Miner::create();
-	miner->setPosition(size.width+100, size.height - 210);
+	miner->setPosition(size.width+300, size.height - 210);
 	addChild(miner);
 
 	//开始关卡提示动画， 及动画回掉进入游戏界面
