@@ -16,13 +16,14 @@ Scene* GameMain::createScene() {
 	PhysicsWorld *world = scene->getPhysicsWorld();
 	world->setGravity(Vec2::ZERO);
 
-	Size size = Director::getInstance()->getWinSize();
+	Size size = Director::getInstance()->getVisibleSize();
 	PhysicsBody *body = PhysicsBody::createEdgeBox(size);
 	body->setCategoryBitmask(10);
 	body->setCategoryBitmask(10);
 	body->setContactTestBitmask(10);
 
 	Node *node = Node::create();
+	node->setContentSize(size);
 	node->setPosition(size/2);
 	node->setPhysicsBody(body);
 	node->setTag(WORLDTAG);
