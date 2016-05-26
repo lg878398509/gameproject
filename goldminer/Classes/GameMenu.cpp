@@ -41,6 +41,7 @@ bool GameMenu::init()
 	auto aniEnterMenu = CSLoader::createTimeline("menu.csb");
 	aniEnterMenu->gotoFrameAndPlay(0, 100, false);
 	aniEnterMenu->gotoFrameAndPlay(101, 145, true);
+	aniEnterMenu->gotoFrameAndPlay(151, 180, true);
 	aniEnterMenu->gotoFrameAndPlay(101, 200, true);
 	sysMenu->runAction(aniEnterMenu);
 	this->addChild(sysMenu);
@@ -62,7 +63,8 @@ bool GameMenu::init()
 
 	_eventDispatcher->addCustomEventListener("newbie", [=](Ref *pSender) {
 		onEnter();
-		this->addChild(Newbie::create());
+		onExit();
+		Director::getInstance()->getRunningScene()->addChild(Newbie::create());
 	});
 
 	_eventDispatcher->addCustomEventListener("setting_over", [=](Ref *pSender) {
@@ -76,10 +78,10 @@ void GameMenu::showSetting(Ref *pSender, Widget::TouchEventType type) {
 	if (type == Widget::TouchEventType::ENDED) {
 		if (isBtnSettingOption)  //ÉèÖÃ°´Å¥ÏÔÊ¾×´Ì¬
 		{
-			auto moveAction = MoveTo::create(0.2, Vec2(point.x, point.y - 60));
+			auto moveAction = MoveTo::create(0.2, Vec2(point.x, point.y - btnOption->getContentSize().height));
 			btnOption->runAction(EaseBackInOut::create(moveAction));
 		} else {
-			auto moveAction = MoveTo::create(0.2, Vec2(point.x, point.y + 60));
+			auto moveAction = MoveTo::create(0.2, Vec2(point.x, point.y + btnOption->getContentSize().height));
 			btnOption->runAction(EaseBackInOut::create(moveAction));
 		}
 

@@ -63,6 +63,7 @@ bool Newbie::init()
 void Newbie::closeWindow(Ref *pSender, Widget::TouchEventType type) {
 	auto closeMove = MoveTo::create(0.5, Vec2(win_size.width / 2, - win_size.height / 2));
 	newbie->runAction(EaseBackInOut::create(Sequence::create(closeMove, CallFuncN::create([=](Ref *pSender) {
+		_eventDispatcher->dispatchCustomEvent("setting_over");
 		removeFromParentAndCleanup(true);
 	}), nullptr)));
 }
