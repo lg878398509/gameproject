@@ -54,7 +54,7 @@ public:
 	//张开钩子
 	void runClawOpen();
 	//添加金块
-	void addGold(std::string type);
+	void addGold(std::string type, Size size);
 	//得到钩子轴承位置
 	Point getClawAxisPoint();
 

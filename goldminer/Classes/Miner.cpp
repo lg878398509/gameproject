@@ -109,14 +109,12 @@ void Miner::runRopePull() {
 void Miner::reduceRopeHeight(float df) {
 
 	if (_gold) {
-		ropeHeight -= (20 - _gold->getWeight());
+		ropeHeight -= (13 - _gold->getWeight());
 	}
 	else {
-		ropeHeight -= 20;
+		ropeHeight -= 13;
 		
 	}
-
-	
 	if (ropeHeight <= 20) {
 		unschedule(CC_SCHEDULE_SELECTOR(Miner::reduceRopeHeight));
 		ropeHeight = 20;
@@ -170,8 +168,8 @@ void Miner::runClawOpen() {
 }
 
 //Ìí¼Ó½ð¿é
-void Miner::addGold(std::string type) {
-	_gold = Gold::create(type);
+void Miner::addGold(std::string type, Size size) {
+	_gold = Gold::create(type, size);
 	clawAxis->addChild(_gold);
 
 	if (type == "smallGold") {

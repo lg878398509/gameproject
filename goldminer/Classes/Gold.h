@@ -11,9 +11,9 @@ using namespace spine;
 class Gold : public cocos2d::Sprite
 {
 public:
-    virtual bool init(std::string type);
+    virtual bool init(std::string type, Size size);
 
-	static Gold* create(std::string type);
+	static Gold* create(std::string type, Size size);
 
 	int getWeight();
 

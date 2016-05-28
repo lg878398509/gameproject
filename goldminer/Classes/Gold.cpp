@@ -1,8 +1,8 @@
 #include "Gold.h"
 
-Gold* Gold::create(std::string type) {
+Gold* Gold::create(std::string type, Size size) {
 	Gold *gold = new Gold();
-	if (gold && gold->init(type)) {
+	if (gold && gold->init(type, size)) {
 		gold->autorelease();
 		return gold;
 	}
@@ -13,12 +13,12 @@ Gold* Gold::create(std::string type) {
 	}
 }
 
-bool Gold::init(std::string type) {
+bool Gold::init(std::string type, Size size) {
 	if (type == "smallGold") {
 		if (!initWithSpriteFrameName("gold-1-1.png")) {
 			return false;
 		}
-		setScale(0.3);
+		setScale(0.5);
 		weight = 3;
 		value = 50;
 	} 
@@ -26,7 +26,7 @@ bool Gold::init(std::string type) {
 		if (!initWithSpriteFrameName("gold-0-0.png")) {
 			return false;
 		}
-		setScale(0.7);
+		setScale(1);
 		weight = 4;
 		value = 250;
 	}
@@ -34,7 +34,7 @@ bool Gold::init(std::string type) {
 		if (!initWithSpriteFrameName("gold-0-0.png")) {
 			return false;
 		}
-		setScale(1.2);
+		setScale(1.5);
 		weight = 5;
 		value = 500;
 	}
@@ -42,7 +42,7 @@ bool Gold::init(std::string type) {
 		if (!initWithSpriteFrameName("stone-0.png")) {
 			return false;
 		}
-		setScale(0.8);
+		setScale(1);
 		weight = 7;
 		value = 10;
 	}
@@ -50,7 +50,7 @@ bool Gold::init(std::string type) {
 		if (!initWithSpriteFrameName("stone-0.png")) {
 			return false;
 		}
-		setScale(1.5);
+		setScale(2);
 		weight = 8;
 		value = 20;
 	}
