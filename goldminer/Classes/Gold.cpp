@@ -26,7 +26,7 @@ bool Gold::init(std::string type) {
 		if (!initWithSpriteFrameName("gold-0-0.png")) {
 			return false;
 		}
-		setScale(0.6);
+		setScale(0.7);
 		weight = 4;
 		value = 250;
 	}
@@ -34,6 +34,7 @@ bool Gold::init(std::string type) {
 		if (!initWithSpriteFrameName("gold-0-0.png")) {
 			return false;
 		}
+		setScale(1.2);
 		weight = 5;
 		value = 500;
 	}
@@ -41,7 +42,7 @@ bool Gold::init(std::string type) {
 		if (!initWithSpriteFrameName("stone-0.png")) {
 			return false;
 		}
-		setScale(0.5);
+		setScale(0.8);
 		weight = 7;
 		value = 10;
 	}
@@ -49,6 +50,7 @@ bool Gold::init(std::string type) {
 		if (!initWithSpriteFrameName("stone-0.png")) {
 			return false;
 		}
+		setScale(1.5);
 		weight = 8;
 		value = 20;
 	}

@@ -48,8 +48,6 @@ private:
 	int curLevel;//当前关卡
 	Size size;
 	Miner* miner;
-	//控制矿工第一次进入时和墙壁的碰撞检测
-	int control = -1;
 	Text *textcurCoin;
 	int curGold;//当前分数
 	ActionTimeline* levelDown;

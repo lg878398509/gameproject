@@ -62,6 +62,13 @@ public:
 	void dropGold();
 
 	bool isAddGold();
+
+	/*
+		将钩子设置成刚体
+		在GameMain中当 “老爷爷”进入屏幕中间时进行设置，
+		避免动画进入时与世界边界碰撞进入回掉方法导致钩子摆动
+	*/
+	void setClawAxisToPhysics();
 private:
 	//增加绳子的长度
 	void addRopeHeight(float df);

@@ -19,9 +19,9 @@ Scene* GameMain::createScene() {
 	Size size = Director::getInstance()->getVisibleSize();
 	Vec2 originSize = Director::getInstance()->getVisibleOrigin();
 	PhysicsBody *body = PhysicsBody::createEdgeBox(size);
-	body->setCategoryBitmask(10);
-	body->setCategoryBitmask(10);
+	body->setCategoryBitmask(1);
 	body->setContactTestBitmask(10);
+	body->setCollisionBitmask(1);
 
 	Node *node = Node::create();
 	node->setPosition(size.width / 2 + originSize.x, size.height / 2 + originSize.y);
@@ -89,7 +89,7 @@ bool GameMain::init() {
 
 	//添加矿工
 	miner = Miner::create();
-	miner->setPosition(size.width+300, size.height - 210);
+	miner->setPosition(size.width + size.width/4, size.height - 210);
 	addChild(miner);
 
 	//开始关卡提示动画， 及动画回掉进入游戏界面
@@ -99,35 +99,31 @@ bool GameMain::init() {
 	//创建碰撞监听事件
 	auto physicsListener = EventListenerPhysicsContact::create();
 	physicsListener->onContactBegin = [=](PhysicsContact& contact) {
-		if (-1 != control) {
-			//判断碰撞的是世界边界还是金块
-			auto shapeB = contact.getShapeB()->getBody()->getNode();
-			//钩子碰撞到金币的声音
-			if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT) && !miner->isAddGold()) {
-				if (shapeB->getName() == "smallGold" || shapeB->getName() == "moddleGold") {
-					SimpleAudioEngine::getInstance()->playEffect(CONTACT_GOLD_NORMAL_MUSIC);
-				}
-				else if (shapeB->getName() == "bigGold") {
-					SimpleAudioEngine::getInstance()->playEffect(CONTACT_GOLD_BIG_MUSIC);
-				}
-				else if (shapeB->getName() == "bigstone" || shapeB->getName() == "smallstone") {
-					SimpleAudioEngine::getInstance()->playEffect(CONTACT_STONE_MUSIC);
-				}
+		//判断碰撞的是世界边界还是金块
+		auto shapeB = contact.getShapeB()->getBody()->getNode();
+		//钩子碰撞到金币的声音
+		if (UserDefault::getInstance()->getBoolForKey(IS_PLAY_EFFECT) && !miner->isAddGold()) {
+			if (shapeB->getName() == "smallGold" || shapeB->getName() == "moddleGold") {
+				SimpleAudioEngine::getInstance()->playEffect(CONTACT_GOLD_NORMAL_MUSIC);
 			}
-
-			if (WORLDTAG != shapeB->getTag() && !miner->isAddGold()) {
-				//合拢钩子
-				miner->runClawClose();
-				miner->addGold(shapeB->getName());
-				//移除屏幕中的金块
-				shapeB->removeFromParent();
-
+			else if (shapeB->getName() == "bigGold") {
+				SimpleAudioEngine::getInstance()->playEffect(CONTACT_GOLD_BIG_MUSIC);
 			}
-			//拉绳子操作
-			miner->runRopePull();
-			
+			else if (shapeB->getName() == "bigstone" || shapeB->getName() == "smallstone") {
+				SimpleAudioEngine::getInstance()->playEffect(CONTACT_STONE_MUSIC);
+			}
 		}
-		control++;
+
+		if (WORLDTAG != shapeB->getTag() && !miner->isAddGold()) {
+			//合拢钩子
+			miner->runClawClose();
+			miner->addGold(shapeB->getName());
+			//移除屏幕中的金块
+			shapeB->removeFromParent();
+
+		}
+		//拉绳子操作
+		miner->runRopePull();
 		return true;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(physicsListener, this);
@@ -252,6 +248,9 @@ void GameMain::startTrips(ActionTimeline* timeD) {
 			//倒计时牌下来
 			timeD->gotoFrameAndPlay(0, false);
 
+			//将钩子设置为刚体
+			miner->setClawAxisToPhysics();
+
 			//开始摆动钩子
 			miner->runShakeClaw();
 
@@ -310,16 +309,15 @@ void GameMain::setGoldStoneToBody(Vector<Node *> goldVector) {
 		
 		auto body = PhysicsBody::createBox(goldSize);
 		body->setCategoryBitmask(10);
-		body->setCollisionBitmask(10);
 		body->setContactTestBitmask(10);
+		body->setCollisionBitmask(10);
+		
 		gold->setPhysicsBody(body);
 	}
 }
 
 
 void GameMain::exitLevel() {
-
-	control = -1;
 	
 	//丢弃金币
 	miner->dropGold();
@@ -358,8 +356,6 @@ void GameMain::timeDownCount(float df) {
 }
 
 void GameMain::gameResult() {
-
-	control = -1;
 
 	//丢弃金币
 	miner->dropGold();
@@ -426,5 +422,4 @@ GameMain::~GameMain() {
 	/*_eventDispatcher->removeCustomEventListeners("pullcomplete");*/
 	_eventDispatcher->removeCustomEventListeners("gamePause"); 
 	_eventDispatcher->removeCustomEventListeners("exitLevel");
-	control = -1;
 }

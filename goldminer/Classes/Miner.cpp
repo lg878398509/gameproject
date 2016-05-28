@@ -35,13 +35,7 @@ bool Miner::init() {
 
 	rope = static_cast<ImageView *>(Helper::seekWidgetByName(static_cast<Widget *>(claw), "rope"));
 	clawAxis = static_cast<ImageView *>(Helper::seekWidgetByName(static_cast<Widget *>(claw), "clawAxis"));
-	
-	PhysicsBody *body = PhysicsBody::createCircle(20);
-	body->setCategoryBitmask(10);
-	body->setCollisionBitmask(10);
-	body->setContactTestBitmask(10);
-	clawAxis->setPhysicsBody(body);
-	
+		
 	return true;
 }
 
@@ -87,8 +81,10 @@ void Miner::runRopeThrow() {
 
 //增加绳子的长度
 void Miner::addRopeHeight(float df) {
-	ropeHeight += 10;
+	
+	ropeHeight += 20;
  	rope->setSize(Size(rope->getSize().width, ropeHeight));
+	
 }
 
 //缩绳子操作
@@ -113,10 +109,10 @@ void Miner::runRopePull() {
 void Miner::reduceRopeHeight(float df) {
 
 	if (_gold) {
-		ropeHeight -= (10 - _gold->getWeight());
+		ropeHeight -= (20 - _gold->getWeight());
 	}
 	else {
-		ropeHeight -= 10;
+		ropeHeight -= 20;
 		
 	}
 
@@ -220,4 +216,12 @@ void Miner::dropGold() {
 
 bool Miner::isAddGold() {
 	return NULL != _gold ? true : false;
+}
+
+void Miner::setClawAxisToPhysics() {
+	PhysicsBody *body = PhysicsBody::createCircle(15);
+	body->setCategoryBitmask(11);
+	body->setContactTestBitmask(11);
+	body->setCollisionBitmask(11);
+	clawAxis->setPhysicsBody(body);
 }
