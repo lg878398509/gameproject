@@ -138,5 +138,7 @@ void GameSetting::newbie(Ref *pSender, Widget::TouchEventType type) {
 }
 //关于我们
 void GameSetting::about(Ref *pSender, Widget::TouchEventType type) {
-
+	if (type == Widget::TouchEventType::ENDED) {
+		Director::getInstance()->end();
+	}
 }

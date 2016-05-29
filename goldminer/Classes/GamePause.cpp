@@ -66,8 +66,14 @@ bool GamePause::init()
 	//退出游戏
 	auto btnExit = static_cast<Button *>(Helper::seekWidgetByName(static_cast<Button *>(gamePause), "btnExit"));
 	btnExit->addTouchEventListener(CC_CALLBACK_2(GamePause::btnExit, this));
-	btnNextLevel = static_cast<Button *>(Helper::seekWidgetByName(static_cast<Button *>(gamePause), "btnNextLevel"));
 	
+	//下一关
+	btnNextLevel = static_cast<Button *>(Helper::seekWidgetByName(static_cast<Button *>(gamePause), "btnNextLevel"));
+	btnNextLevel->addTouchEventListener(CC_CALLBACK_2(GamePause::nextLevel, this));
+
+	//新手教程
+	auto btnNewbie = static_cast<Button *>(Helper::seekWidgetByName(static_cast<Button *>(gamePause), "btnNewbie"));
+	btnNewbie->addTouchEventListener(CC_CALLBACK_2(GamePause::newbie, this));
     return true;
 }
 
@@ -120,11 +126,21 @@ void GamePause::closeBgMusic(Ref *pSender, Widget::TouchEventType type) {
 }
 //新手教程
 void GamePause::newbie(Ref *pSender, Widget::TouchEventType type) {
-
+	if (type == Widget::TouchEventType::ENDED) {
+		auto moveBack = MoveTo::create(0.5, Vec2(2 * visiableSize.width, visiableSize.height / 2));
+		auto seq = Sequence::create(moveBack, CallFuncN::create(CC_CALLBACK_1(GamePause::removeSeft, this)), nullptr);
+		gamePause->runAction(seq);
+		Director::getInstance()->getRunningScene()->addChild(Newbie::create());
+	}
 }
-//关于我们
-void GamePause::about(Ref *pSender, Widget::TouchEventType type) {
-
+//下一关
+void GamePause::nextLevel(Ref *pSender, Widget::TouchEventType type) {
+	if (type == Widget::TouchEventType::ENDED) {
+		if (btnNextLevel->isEnabled()) {
+			_eventDispatcher->dispatchCustomEvent("nextLevel");
+			removeFromParentAndCleanup(true);
+		}
+	}
 }
 
 //退出游戏

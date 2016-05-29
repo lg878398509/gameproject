@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "cocostudio\CocoStudio.h"
+#include "Newbie.h"
 
 #include "ui/CocosGUI.h"
 using namespace cocos2d::ui; 
@@ -28,8 +29,8 @@ private:
 	void closeBgMusic(Ref *pSender, Widget::TouchEventType type);
 	//新手教程
 	void newbie(Ref *pSender, Widget::TouchEventType type);
-	//关于我们
-	void about(Ref *pSender, Widget::TouchEventType type);
+	//下一关
+	void nextLevel(Ref *pSender, Widget::TouchEventType type);
 	//退出关卡
 	void btnExit(Ref *pSender, Widget::TouchEventType type);
 	//移除自己

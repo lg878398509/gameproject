@@ -160,6 +160,14 @@ bool GameMain::init() {
 	_eventDispatcher->addEventListenerWithFixedPriority(pullcompleteListener, 1);
 
 
+	nextLevelListener = EventListenerCustom::create("nextLevel", [=](EventCustom* event) {
+		onEnter();
+		gameResult();
+	});
+	_eventDispatcher->addEventListenerWithFixedPriority(nextLevelListener, 2);
+
+
+
 	////添加拉绳子结束的回掉
 	//_eventDispatcher->addCustomEventListener("pullcomplete", [=](EventCustom *evn) {
 	//	String *strValue = (String*)(evn->getUserData());
@@ -305,8 +313,6 @@ void GameMain::setGoldStoneToBody(Vector<Node *> goldVector) {
 		else if ("bigstone" == gold->getName()) {//石头
 		
 		}
-
-		
 		auto body = PhysicsBody::createBox(goldSize);
 		body->setCategoryBitmask(10);
 		body->setContactTestBitmask(10);
@@ -419,6 +425,8 @@ void GameMain::gameResult() {
 GameMain::~GameMain() {
 	SimpleAudioEngine::getInstance()->stopAllEffects();
 	_eventDispatcher->removeEventListener(pullcompleteListener);
+	_eventDispatcher->removeEventListener(nextLevelListener);
+	
 	/*_eventDispatcher->removeCustomEventListeners("pullcomplete");*/
 	_eventDispatcher->removeCustomEventListeners("gamePause"); 
 	_eventDispatcher->removeCustomEventListeners("exitLevel");

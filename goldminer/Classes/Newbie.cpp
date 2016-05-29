@@ -48,14 +48,13 @@ bool Newbie::init()
 	auto btnNext = static_cast<Button *>(Helper::seekWidgetByName(static_cast<Widget *>(newbie), "btnNext"));
 	btnNext->addTouchEventListener(CC_CALLBACK_2(Newbie::nextPic, this));
 
-	layout = static_cast<Layout *>(Helper::seekWidgetByName(static_cast<Widget *>(newbie), "newbie_pic"));
-	ImageView *imageView = ImageView::create("instruction1.png");
+	/*ImageView *imageView = ImageView::create("instruction1.png");
 	imageView->setScale9Enabled(true);
 	imageView->setAnchorPoint(Point(0.5, 0.5));
 	imageView->setTag(100);
 	imageView->setPosition(convertToWorldSpace(layout->getPosition()));
-	
-	layout->addChild(imageView);
+	imageView->setContentSize(layout->getContentSize());
+	layout->addChild(imageView);*/
     return true;
 }
 
@@ -64,6 +63,7 @@ void Newbie::closeWindow(Ref *pSender, Widget::TouchEventType type) {
 	auto closeMove = MoveTo::create(0.5, Vec2(win_size.width / 2, - win_size.height / 2));
 	newbie->runAction(EaseBackInOut::create(Sequence::create(closeMove, CallFuncN::create([=](Ref *pSender) {
 		_eventDispatcher->dispatchCustomEvent("setting_over");
+		_eventDispatcher->dispatchCustomEvent("gamePause");
 		removeFromParentAndCleanup(true);
 	}), nullptr)));
 }
@@ -71,7 +71,7 @@ void Newbie::closeWindow(Ref *pSender, Widget::TouchEventType type) {
 //ÏÂÒ»²½ÇÐ»»Í¼Æ¬
 void Newbie::nextPic(Ref *pSender, Widget::TouchEventType type) {
 	if (type == Widget::TouchEventType::ENDED) {
-		if (layout->getChildByName("instruction2") != NULL) {
+		/*if (layout->getChildByName("instruction2") != NULL) {
 			closeWindow(pSender, type);
 			return;
 		}
@@ -81,6 +81,15 @@ void Newbie::nextPic(Ref *pSender, Widget::TouchEventType type) {
 		imageView->setAnchorPoint(Point(0.5, 0.5));
 		imageView->setPosition(convertToWorldSpace(layout->getPosition()));
 		layout->removeChildByTag(100);
-		layout->addChild(imageView);
+		layout->addChild(imageView);*/
+		
+
+		auto img = static_cast<ImageView *>(Helper::seekWidgetByName(static_cast<Widget *>(newbie), "newbie_img"));
+		if (0 == img->getTag()) {
+			closeWindow(pSender, type);
+			return;
+		}
+		img->loadTexture("instruction2.png", TextureResType::LOCAL);
+		img->setTag(0);
 	}
 }

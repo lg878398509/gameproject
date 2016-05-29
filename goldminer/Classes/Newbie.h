@@ -29,8 +29,6 @@ private:
 
 	Node *newbie;
 
-	Layout *layout;
-
 };
 
 #endif // __NEWBIE_H__

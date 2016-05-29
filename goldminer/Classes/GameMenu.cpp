@@ -101,4 +101,5 @@ void GameMenu::showOption(Ref *pSender, Widget::TouchEventType type) {
 
 GameMenu::~GameMenu() {
 	_eventDispatcher->removeCustomEventListeners("newbie");
+	_eventDispatcher->removeCustomEventListeners("setting_over");
 }
