@@ -297,7 +297,7 @@ void GameMain::setGoldStoneToBody(Vector<Node *> goldVector) {
 		auto gold = goldVector.at(i);
 		Size goldSize = gold->getContentSize();
 		if ("smallGold" == gold->getName()) {//小金块
-			goldSize = 0.3 * goldSize;
+			goldSize = 0.4 * goldSize;
 		
 		}
 		else if ("moddleGold" == gold->getName()) {//中金块
