@@ -117,7 +117,7 @@ bool GameMain::init() {
 		if (WORLDTAG != shapeB->getTag() && !miner->isAddGold()) {
 			//合拢钩子
 			miner->runClawClose();
-			miner->addGold(shapeB->getName(), shapeB->getContentSize());
+			miner->addGold(shapeB->getName(), shapeB->getBoundingBox().size);
 			//移除屏幕中的金块
 			shapeB->removeFromParent();
 
