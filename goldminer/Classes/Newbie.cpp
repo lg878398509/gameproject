@@ -89,7 +89,7 @@ void Newbie::nextPic(Ref *pSender, Widget::TouchEventType type) {
 			closeWindow(pSender, type);
 			return;
 		}
-		img->loadTexture("instruction2.png", TextureResType::LOCAL);
+		img->loadTexture("drawable-hdpi/instruction2.png", TextureResType::LOCAL);
 		img->setTag(0);
 	}
 }
