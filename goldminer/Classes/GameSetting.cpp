@@ -29,12 +29,13 @@ bool GameSetting::init()
     }
 
 	visiableSize = Director::getInstance()->getVisibleSize();
+	Vec2 originSize = Director::getInstance()->getVisibleOrigin();
 	menuSetting = CSLoader::createNode("menuSetting.csb");
 	menuSetting->setAnchorPoint(Vec2(0.5, 0.5));
 	menuSetting->setPosition(Point(-200, visiableSize.height / 2));
 
 	//Ìí¼Ó¶¯»­
-	auto enterAction = MoveTo::create(0.5, Vec2(visiableSize.width/2, visiableSize.height/2));
+	auto enterAction = MoveTo::create(0.5, Vec2(SCREEN_MIDDLE(visiableSize.width, originSize.x), visiableSize.height/2));
 	menuSetting->runAction(EaseBackInOut::create(enterAction));
 	this->addChild(menuSetting);
 

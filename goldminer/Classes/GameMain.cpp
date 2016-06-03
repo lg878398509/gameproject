@@ -16,15 +16,16 @@ Scene* GameMain::createScene() {
 	PhysicsWorld *world = scene->getPhysicsWorld();
 	world->setGravity(Vec2::ZERO);
 
-	Size size = Director::getInstance()->getVisibleSize();
-	Vec2 originSize = Director::getInstance()->getVisibleOrigin();
-	PhysicsBody *body = PhysicsBody::createEdgeBox(size);
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 originSizeS = Director::getInstance()->getVisibleOrigin();
+
+	PhysicsBody *body = PhysicsBody::createEdgeBox(visibleSize);
 	body->setCategoryBitmask(1);
 	body->setContactTestBitmask(10);
 	body->setCollisionBitmask(1);
 
 	Node *node = Node::create();
-	node->setPosition(size.width / 2 + originSize.x, size.height / 2 + originSize.y);
+	node->setPosition(SCREEN_MIDDLE(visibleSize.width, originSizeS.x), visibleSize.height / 2 + originSizeS.y);
 	node->setPhysicsBody(body);
 	node->setTag(WORLDTAG);
 	scene->addChild(node);
@@ -47,12 +48,12 @@ bool GameMain::init() {
 		SimpleAudioEngine::getInstance()->playBackgroundMusic(LEVEL_BG_MUSIC, true);
 	}
 
+	size = Director::getInstance()->getVisibleSize();
+	originSize = Director::getInstance()->getVisibleOrigin();
+
 	curLevel = UserDefault::getInstance()->getIntegerForKey(CUR_LEVEL);
 	curGold = UserDefault::getInstance()->getIntegerForKey(CUR_GOLD);
 	goalCoin = GOAL_COIN(curLevel);
-
-
-	size = Director::getInstance()->getVisibleSize();
 
 	//auto level_1 = CSLoader::createNode("level_1.csb");
 	Data data = FileUtils::getInstance()->getDataFromFile(String::createWithFormat("Level_%d.csb", (curLevel % 7))->getCString());
@@ -234,25 +235,25 @@ void GameMain::startTrips(ActionTimeline* timeD) {
 
 	//当前关卡动画
 	auto levelNode = static_cast<Text *>(Helper::seekWidgetByName(static_cast<Layout *> (startTrips), "levelNode"));
-	auto nodeMove = createMove(size.width / 2, levelNode->getPosition().y);
-	auto levelSquence = Sequence::create(EaseBackInOut::create(createMove(size.width / 2, levelNode->getPosition().y)), 
+	auto nodeMove = createMove(SCREEN_MIDDLE(size.width, originSize.x), levelNode->getPosition().y);
+	auto levelSquence = Sequence::create(EaseBackInOut::create(createMove(SCREEN_MIDDLE(size.width, originSize.x), levelNode->getPosition().y)),
 		DelayTime::create(1), EaseBackInOut::create(createMove(size.width + levelNode->getSize().width, levelNode->getPosition().y)), nullptr);
 	levelNode->runAction(levelSquence);
 
 	//图标动画
 	auto goalSymbol = static_cast<ImageView *> (Helper::seekWidgetByName(static_cast<Layout *> (startTrips), "goalSymbol"));
-	auto symbolSquence = Sequence::create(EaseBackInOut::create(createMove(size.width / 2 - 150, goalSymbol->getPosition().y)),
-		DelayTime::create(1), EaseBackInOut::create(createMove(size.width / 2 - 150, -100)), nullptr);
+	auto symbolSquence = Sequence::create(EaseBackInOut::create(createMove(SCREEN_MIDDLE(size.width, originSize.x) - 170, goalSymbol->getPosition().y)),
+		DelayTime::create(1), EaseBackInOut::create(createMove(SCREEN_MIDDLE(size.width, originSize.x) - 170, -100)), nullptr);
 	goalSymbol->runAction(symbolSquence);
 
 	//目标分数动画
 	auto goalNode = static_cast<Text *> (Helper::seekWidgetByName(static_cast<Layout *> (startTrips), "goalNode"));
-	auto goalNodeSquence = Sequence::create(EaseBackInOut::create(createMove(size.width / 2 + 10, goalNode->getPosition().y)),
-		DelayTime::create(1), EaseBackInOut::create(createMove(size.width / 2 + 10, -100)), 
+	auto goalNodeSquence = Sequence::create(EaseBackInOut::create(createMove(SCREEN_MIDDLE(size.width, originSize.x) + 30, goalNode->getPosition().y)),
+		DelayTime::create(1), EaseBackInOut::create(createMove(SCREEN_MIDDLE(size.width, originSize.x) + 30, -100)),
 		CCCallFuncN::create([=](Node* node) {
 		startTrips->removeFromParentAndCleanup(true);
 		miner->runAppear();
-		miner->runAction(Sequence::create(MoveTo::create(2, Vec2(size.width / 2, size.height - 210)), CCCallFuncN::create([=](Ref *ref) {
+		miner->runAction(Sequence::create(MoveTo::create(2, Vec2(SCREEN_MIDDLE(size.width, originSize.x), size.height - 210)), CCCallFuncN::create([=](Ref *ref) {
 			//倒计时牌下来
 			timeD->gotoFrameAndPlay(0, false);
 
@@ -379,7 +380,7 @@ void GameMain::gameResult() {
 		auto userDef = UserDefault::getInstance();
 		if (curGold < goalCoin) {
 			//提示语句
-			auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width/2, gameFail->getPosition().y))),
+			auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(SCREEN_MIDDLE(size.width, originSize.x), gameFail->getPosition().y))),
 				DelayTime::create(1),
 				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, gameFail->getPosition().y))),
 				CallFuncN::create([=](Ref *ref) {
@@ -412,7 +413,7 @@ void GameMain::gameResult() {
 			gameSuccess->runAction(seq);
 
 			//提示语句
-			auto nodeCoinSeq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width / 2, nodeCoin->getPosition().y))),
+			auto nodeCoinSeq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(SCREEN_MIDDLE(size.width, originSize.x), nodeCoin->getPosition().y))),
 				DelayTime::create(1),
 				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, nodeCoin->getPosition().y))), nullptr);
 			nodeCoin->runAction(nodeCoinSeq);

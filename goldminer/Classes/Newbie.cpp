@@ -29,7 +29,7 @@ bool Newbie::init()
     }
 	//初始化变量
 	win_size = Director::getInstance()->getVisibleSize();
-
+	Vec2 originSize = Director::getInstance()->getVisibleOrigin();
 
 	//加载 新手教程 界面
 	newbie = CSLoader::createNode("newbie.csb");
@@ -37,7 +37,7 @@ bool Newbie::init()
 	newbie->setAnchorPoint(Point(0.5, 0.5));
 	addChild(newbie);
 
-	auto moveCenter = MoveTo::create(0.5, Vec2(win_size.width / 2, win_size.height / 2));
+	auto moveCenter = MoveTo::create(0.5, Vec2(SCREEN_MIDDLE(win_size.width, originSize.x), win_size.height / 2));
 	newbie->runAction(EaseBackInOut::create(moveCenter));
 
 	//关闭按钮

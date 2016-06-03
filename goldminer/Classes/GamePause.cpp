@@ -29,12 +29,14 @@ bool GamePause::init()
     }
 
 	visiableSize = Director::getInstance()->getVisibleSize();
+	Vec2 originSize = Director::getInstance()->getVisibleOrigin();
+
 	gamePause = CSLoader::createNode("gamepause.csb");
 	gamePause->setAnchorPoint(Vec2(0.5, 0.5));
 	gamePause->setPosition(Point(-200, visiableSize.height / 2));
 
 	//Ìí¼Ó¶¯»­
-	auto enterAction = MoveTo::create(0.5, Vec2(visiableSize.width/2, visiableSize.height/2));
+	auto enterAction = MoveTo::create(0.5, Vec2(SCREEN_MIDDLE(visiableSize.width, originSize.x), visiableSize.height/2));
 	gamePause->runAction(EaseBackInOut::create(enterAction));
 	this->addChild(gamePause);
 

@@ -37,4 +37,8 @@
 
 #define GAME_LEFT_TIME(x) 30 + x
 
+
+//计算屏幕中心点坐标
+#define SCREEN_MIDDLE(visiableSizeWidth, originSizeX) visiableSizeWidth / 2 + originSizeX
+
 #endif // __GLOBALDEFINE_H__

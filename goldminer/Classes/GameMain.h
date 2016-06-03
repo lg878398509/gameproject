@@ -46,7 +46,10 @@ private:
 private:
 	int goalCoin;//目标分数
 	int curLevel;//当前关卡
+	
 	Size size;
+	Vec2 originSize;
+
 	Miner* miner;
 	Text *textcurCoin;
 	int curGold;//当前分数
