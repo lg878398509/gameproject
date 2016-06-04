@@ -28,6 +28,9 @@ bool GamePause::init()
         return false;
     }
 
+	//ÔÝÍ£Ê±£¬ Í£Ö¹ËùÓÐµÄÅö×²ÉùÒô
+	SimpleAudioEngine::getInstance()->stopAllEffects();
+
 	visiableSize = Director::getInstance()->getVisibleSize();
 	Vec2 originSize = Director::getInstance()->getVisibleOrigin();
 

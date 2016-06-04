@@ -343,7 +343,7 @@ void GameMain::exitLevel() {
 			//提示语句
 			auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, size / 2)),
 				DelayTime::create(1),
-				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, size.height / 2))),
+				EaseBackInOut::create(MoveTo::create(0.5, Vec2(1.5 * size.width, size.height / 2))),
 				CallFuncN::create([=](Ref *ref) {
 				Director::getInstance()->replaceScene(GameMenu::createScene());
 			}),
@@ -382,7 +382,7 @@ void GameMain::gameResult() {
 			//提示语句
 			auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(SCREEN_MIDDLE(size.width, originSize.x), gameFail->getPosition().y))),
 				DelayTime::create(1),
-				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, gameFail->getPosition().y))),
+				EaseBackInOut::create(MoveTo::create(0.5, Vec2(1.5 * size.width, gameFail->getPosition().y))),
 				CallFuncN::create([=](Ref *ref) {
 				userDef->setIntegerForKey(CUR_LEVEL, 1);
 				userDef->setIntegerForKey(CUR_GOLD, 0);
@@ -404,7 +404,7 @@ void GameMain::gameResult() {
 			//提示语句
 			auto seq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width/2, gameSuccess->getPosition().y))),
 				DelayTime::create(1),
-				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, gameSuccess->getPosition().y))),
+				EaseBackInOut::create(MoveTo::create(0.5, Vec2(1.5 * size.width, gameSuccess->getPosition().y))),
 				CallFuncN::create([=](Ref *ref) {
 					//跳转到下一关
 					Director::getInstance()->replaceScene(GameMain::createScene());
@@ -415,7 +415,7 @@ void GameMain::gameResult() {
 			//提示语句
 			auto nodeCoinSeq = Sequence::create(EaseBackInOut::create(MoveTo::create(0.5, Vec2(SCREEN_MIDDLE(size.width, originSize.x), nodeCoin->getPosition().y))),
 				DelayTime::create(1),
-				EaseBackInOut::create(MoveTo::create(0.5, Vec2(size.width + 300, nodeCoin->getPosition().y))), nullptr);
+				EaseBackInOut::create(MoveTo::create(0.5, Vec2(1.5 * size.width, nodeCoin->getPosition().y))), nullptr);
 			nodeCoin->runAction(nodeCoinSeq);
 		}
 		
