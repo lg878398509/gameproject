@@ -1,6 +1,7 @@
 #include "GameMain.h"
 #include "GameMenu.h"
 #include "GamePause.h"
+#include "GDTAD.h"
 
 #define WORLDTAG 100
 
@@ -216,9 +217,11 @@ bool GameMain::init() {
 	//退出游戏监听
 	_eventDispatcher->addCustomEventListener("exitLevel", [=](EventCustom *evn) {
 		onEnter();
+
+		//显示插屏广告
+		GDTAD::showAd(1);
 		exitLevel();
 	});
-
 
 	return true;
 }
@@ -357,6 +360,10 @@ void GameMain::timeDownCount(float df) {
 	GAME_LEFT_TIME(curLevel)--;
 	timeDownText->setText(StringUtils::toString(GAME_LEFT_TIME(curLevel)));
 	if (GAME_LEFT_TIME(curLevel) <= 0) {
+
+		//显示插屏广告
+		GDTAD::showAd(1);
+
 		gameResult();
 		return;
 	}
